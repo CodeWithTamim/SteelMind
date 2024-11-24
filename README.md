@@ -88,7 +88,7 @@ Contributions are welcome! To contribute:
 
 ## License
 
-This project is licensed under the Apache 2.0 License. See the [LICENSE](https://github.com/CodeWithTamim/SteelMind/blob/main/LICENSE) file for details.
+This project is licensed under the Apache 2.0 License. See the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgements
 
