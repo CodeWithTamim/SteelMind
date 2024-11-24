@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_more"
+        android:icon="@drawable/more_vert_24px"
+        android:title="More"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/top_settings"
+                android:icon="@drawable/settings_24px"
+                android:title="Settings" />
+
+            <item
+                android:id="@+id/top_history"
+                android:icon="@drawable/history_24px"
+                android:title="History" />
+            <item
+                android:id="@+id/top_import"
+                android:icon="@drawable/file_open_24px"
+                android:title="Import Data" />
+            <item
+                android:id="@+id/top_export"
+                android:icon="@drawable/file_export_24px"
+                android:title="Export Data" />
+
+            <item
+                android:id="@+id/top_about"
+                android:icon="@drawable/info_24px"
+                android:title="About" />
+        </menu>
+    </item>
+
+</menu>
