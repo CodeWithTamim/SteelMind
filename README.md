@@ -21,9 +21,9 @@
 
 ## Screenshots
 
-![Screenshot 1](images/img1.png)
-![Screenshot 2](images/img2.png)
-![Screenshot 3](images/img3.png)
+![Screenshot 1](images/image1.png)
+![Screenshot 2](images/image2.png)
+![Screenshot 3](images/image3.png)
 
 ## Installation
 
