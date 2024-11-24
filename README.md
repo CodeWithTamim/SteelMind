@@ -60,7 +60,7 @@ Steel Mind is structured using the **MVVM** architecture, promoting:
 
 ## Built With
 
-- **Kotlin 1.9.10:** Leveraging the latest features and improvements.
+- **Kotlin 2.0.21:** Leveraging the latest features and improvements.
 - **Material Design 3:** Providing a cohesive and modern UI/UX.
 - **MVVM Architecture:** Ensuring a robust and maintainable code structure.
 
