@@ -1,4 +1,7 @@
 *.iml
+.idea
+.koltin
+app/build
 .gradle
 /local.properties
 /.idea/caches
