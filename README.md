@@ -1,8 +1,7 @@
 
 # Steel Mind
 
-![Android](https://img.shields.io/badge/Android-12-brightgreen)
-![Kotlin](https://img.shields.io/badge/Kotlin-1.9.10-blueviolet)
+![Kotlin](https://img.shields.io/badge/Kotlin-2.0.21-blueviolet)
 ![Material Design 3](https://img.shields.io/badge/Material%20Design-3.0-blue)
 ![MVVM Architecture](https://img.shields.io/badge/Architecture-MVVM-orange)
 ![License](https://img.shields.io/badge/License-Apache%202.0-lightgrey)
