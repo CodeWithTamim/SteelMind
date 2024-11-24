@@ -21,9 +21,12 @@
 
 ## Screenshots
 
-![Screenshot 1](images/image1.png)
-![Screenshot 2](images/image2.png)
-![Screenshot 3](images/image3.png)
+<div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+    <img src="images/image1.png" alt="Screenshot 1" style="height: 250px; object-fit: contain;">
+    <img src="images/image2.png" alt="Screenshot 2" style="height: 250px; object-fit: contain;">
+    <img src="images/image3.png" alt="Screenshot 3" style="height: 250px; object-fit: contain;">
+</div>
+
 
 ## Installation
 
