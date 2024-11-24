@@ -22,9 +22,9 @@
 ## Screenshots
 
 <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
-    <img src="images/image1.png" alt="Screenshot 1" style="height: 400px; object-fit: contain;">
-    <img src="images/image2.png" alt="Screenshot 2" style="height: 400px; object-fit: contain;">
-    <img src="images/image3.png" alt="Screenshot 3" style="height: 400px; object-fit: contain;">
+    <img src="images/image1.png" alt="Screenshot 1" style="height: 500px; object-fit: contain;">
+    <img src="images/image2.png" alt="Screenshot 2" style="height: 500px; object-fit: contain;">
+    <img src="images/image3.png" alt="Screenshot 3" style="height: 500px; object-fit: contain;">
 </div>
 
 
