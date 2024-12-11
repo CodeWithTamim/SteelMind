@@ -15,7 +15,7 @@ mmkv = "2.0.1"
 nasacircleimageview = "1.0.5"
 retrofit = "2.11.0"
 sdpAndroid = "1.1.1"
-sspAndroid = "1.0.6"
+sspAndroid = "1.1.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
