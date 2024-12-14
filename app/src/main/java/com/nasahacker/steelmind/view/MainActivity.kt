@@ -122,7 +122,9 @@ class MainActivity : AppCompatActivity() {
 
         binding.toolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.top_about -> startActivity(Intent(this, AboutActivity::class.java))
+                /*
+                                R.id.top_about -> startActivity(Intent(this, AboutActivity::class.java))
+                */
                 R.id.top_history -> startActivity(Intent(this, HistoryActivity::class.java))
                 R.id.top_export -> handleExportAction()
                 R.id.top_import -> pickJsonFileLauncher.launch(arrayOf("application/json", "*/*"))
@@ -211,11 +213,19 @@ class MainActivity : AppCompatActivity() {
                     MmkvManager.setStartTime(user.startTime)
                     MmkvManager.setIsStarted(user.isStarted)
                     MmkvManager.addHistoryList(user.history)
-                    Toast.makeText(this, "Import completed successfully. Restarting...", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        "Import completed successfully. Restarting...",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     runBlocking { delay(1000) }
                     finish()
                 } else {
-                    Toast.makeText(this, "Invalid file format. Please check and try again.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        "Invalid file format. Please check and try again.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }

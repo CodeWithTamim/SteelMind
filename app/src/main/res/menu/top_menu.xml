@@ -8,10 +8,10 @@
         android:title="More"
         app:showAsAction="always">
         <menu>
-            <item
+            <!--<item
                 android:id="@+id/top_settings"
                 android:icon="@drawable/settings_24px"
-                android:title="Settings" />
+                android:title="Settings" />-->
 
             <item
                 android:id="@+id/top_history"
@@ -26,10 +26,10 @@
                 android:icon="@drawable/file_export_24px"
                 android:title="Export Data" />
 
-            <item
+        <!--    <item
                 android:id="@+id/top_about"
                 android:icon="@drawable/info_24px"
-                android:title="About" />
+                android:title="About" />-->
         </menu>
     </item>
 
