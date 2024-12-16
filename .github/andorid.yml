@@ -1,0 +1,37 @@
+name: Build and Publish Release APK
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag (e.g., v1.0.0)'
+        required: true
+        default: 'v1.0.0'
+
+jobs:
+  build-and-publish-apk:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+
+      - name: Build and Publish Release APK
+        uses: timb-machine/android-release-apk@v2.0.0
+        with:
+          release-tag: ${{ github.event.inputs.tag }}
+          release-name: "Release ${{ github.event.inputs.tag }}"
+          release-body: "Release version ${{ github.event.inputs.tag }} published."
+          release-apk-path: "app/release/app-release.apk"
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-apk-${{ github.event.inputs.tag }}
+          path: app/release/app-release.apk

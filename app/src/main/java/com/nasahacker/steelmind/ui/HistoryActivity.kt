@@ -1,13 +1,12 @@
-package com.nasahacker.steelmind.view
+package com.nasahacker.steelmind.ui
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
-import androidx.annotation.MainThread
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.nasahacker.steelmind.R
-import com.nasahacker.steelmind.adapter.HistoryAdapter
+import com.nasahacker.steelmind.dto.HistoryAdapter
 import com.nasahacker.steelmind.databinding.ActivityHistoryBinding
 
 class HistoryActivity : AppCompatActivity() {

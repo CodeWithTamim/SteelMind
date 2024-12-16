@@ -1,13 +1,12 @@
 package com.nasahacker.steelmind.util
 
-import com.nasahacker.steelmind.listener.ResponseListener
-import com.nasahacker.steelmind.model.Quote
+import com.nasahacker.steelmind.dto.ResponseListener
+import com.nasahacker.steelmind.dto.Quote
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import retrofit2.http.GET
 
 object RequestManager {

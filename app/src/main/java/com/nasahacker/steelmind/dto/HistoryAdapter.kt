@@ -1,16 +1,15 @@
-package com.nasahacker.steelmind.adapter
+package com.nasahacker.steelmind.dto
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.nasahacker.steelmind.adapter.HistoryAdapter.HistoryViewMolder
 import com.nasahacker.steelmind.databinding.ItemHistoryBinding
 import com.nasahacker.steelmind.R
 import com.nasahacker.steelmind.util.MmkvManager
 
-class HistoryAdapter(private val context: Context) : RecyclerView.Adapter<HistoryViewMolder>() {
+class HistoryAdapter(private val context: Context) : RecyclerView.Adapter<HistoryAdapter.HistoryViewMolder>() {
 
     private var historyList = MmkvManager.getHistory()
 

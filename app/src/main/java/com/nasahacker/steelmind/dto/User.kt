@@ -1,4 +1,4 @@
-package com.nasahacker.steelmind.model
+package com.nasahacker.steelmind.dto
 
 import com.nasahacker.steelmind.util.MmkvManager
 

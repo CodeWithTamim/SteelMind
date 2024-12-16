@@ -2,7 +2,7 @@ package com.nasahacker.steelmind.util
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.nasahacker.steelmind.model.History
+import com.nasahacker.steelmind.dto.History
 import com.tencent.mmkv.MMKV
 
 object MmkvManager {

@@ -1,4 +1,4 @@
-package com.nasahacker.steelmind.model
+package com.nasahacker.steelmind.dto
 
 data class Quote(
     //quote

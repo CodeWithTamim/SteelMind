@@ -1,4 +1,4 @@
-package com.nasahacker.steelmind.ext
+package com.nasahacker.steelmind.extension
 
 import android.Manifest
 import android.content.ContentValues
@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.gson.Gson
-import com.nasahacker.steelmind.model.User
+import com.nasahacker.steelmind.dto.User
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream

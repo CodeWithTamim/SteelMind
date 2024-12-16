@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.nasahacker.steelmind.listener.ResponseListener
-import com.nasahacker.steelmind.model.Quote
+import com.nasahacker.steelmind.dto.ResponseListener
+import com.nasahacker.steelmind.dto.Quote
 import com.nasahacker.steelmind.util.RequestManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

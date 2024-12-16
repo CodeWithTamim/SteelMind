@@ -1,13 +1,11 @@
-package com.nasahacker.steelmind.view
+package com.nasahacker.steelmind.ui
 
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
-import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -24,12 +22,12 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.nasahacker.steelmind.R
 import com.nasahacker.steelmind.databinding.ActivityMainBinding
-import com.nasahacker.steelmind.ext.readJsonFromUri
-import com.nasahacker.steelmind.ext.saveDataJson
-import com.nasahacker.steelmind.ext.toJson
-import com.nasahacker.steelmind.ext.toUser
-import com.nasahacker.steelmind.model.History
-import com.nasahacker.steelmind.model.User
+import com.nasahacker.steelmind.extension.readJsonFromUri
+import com.nasahacker.steelmind.extension.saveDataJson
+import com.nasahacker.steelmind.extension.toJson
+import com.nasahacker.steelmind.extension.toUser
+import com.nasahacker.steelmind.dto.History
+import com.nasahacker.steelmind.dto.User
 import com.nasahacker.steelmind.util.AppUtils
 import com.nasahacker.steelmind.util.Constants
 import com.nasahacker.steelmind.util.MmkvManager

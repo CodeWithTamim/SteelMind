@@ -1,4 +1,4 @@
-package com.nasahacker.steelmind.view
+package com.nasahacker.steelmind.ui
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
