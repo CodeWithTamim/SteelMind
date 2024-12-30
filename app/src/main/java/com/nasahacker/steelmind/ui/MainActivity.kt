@@ -6,6 +6,8 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -20,6 +22,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.mikepenz.aboutlibraries.LibsBuilder
 import com.nasahacker.steelmind.R
 import com.nasahacker.steelmind.databinding.ActivityMainBinding
 import com.nasahacker.steelmind.extension.readJsonFromUri
@@ -77,6 +80,8 @@ class MainActivity : AppCompatActivity() {
                         action = Constants.ACTION.ACTION_START
                     )
                 )
+                binding.lottieAnim.visibility = VISIBLE
+                binding.lottieAnim.playAnimation()
             }
         }
     }
@@ -105,6 +110,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadDefaultState() {
         if (MmkvManager.getIsStarted()) {
+            binding.lottieAnim.visibility = VISIBLE
             startUpdatingUI()
         }
         binding.btnStartOrReset.text = if (MmkvManager.getIsStarted()) "Reset" else "Start"
@@ -126,6 +132,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.top_history -> startActivity(Intent(this, HistoryActivity::class.java))
                 R.id.top_export -> handleExportAction()
                 R.id.top_import -> pickJsonFileLauncher.launch(arrayOf("application/json", "*/*"))
+                R.id.top_license -> LibsBuilder()
+                    .withActivityTitle("Open Source Licenses")
+                    .start(this)
             }
             true
         }
@@ -175,6 +184,7 @@ class MainActivity : AppCompatActivity() {
             .setPositiveButton("Yes") { _, _ ->
                 val remarks = inputEditText.text?.toString() ?: "No remarks provided"
                 resetProgress(remarks)
+                binding.lottieAnim.visibility = GONE
             }
             .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
             .show()
@@ -196,7 +206,7 @@ class MainActivity : AppCompatActivity() {
 
         MmkvManager.addHistory(
             History(
-                remarks = remarks,
+                remarks = remarks.ifEmpty { "No remarks" },
                 action = Constants.ACTION.ACTION_ENDED
             )
         )
@@ -213,7 +223,7 @@ class MainActivity : AppCompatActivity() {
                     MmkvManager.addHistoryList(user.history)
                     Toast.makeText(
                         this,
-                        "Import completed successfully. Restarting...",
+                        "Import completed successfully. Exiting...",
                         Toast.LENGTH_SHORT
                     ).show()
                     runBlocking { delay(1000) }

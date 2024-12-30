@@ -9,13 +9,14 @@ import com.nasahacker.steelmind.databinding.ItemHistoryBinding
 import com.nasahacker.steelmind.R
 import com.nasahacker.steelmind.util.MmkvManager
 
-class HistoryAdapter(private val context: Context) : RecyclerView.Adapter<HistoryAdapter.HistoryViewMolder>() {
+class HistoryAdapter(private val context: Context, private val onClickListener: OnClickListener) :
+    RecyclerView.Adapter<HistoryAdapter.HistoryViewMolder>() {
 
-    private var historyList = MmkvManager.getHistory()
+    private var historyList = MmkvManager.getHistory().reversed()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): HistoryViewMolder {
         return HistoryViewMolder(
             LayoutInflater.from(context).inflate(R.layout.item_history, parent, false)
@@ -24,13 +25,20 @@ class HistoryAdapter(private val context: Context) : RecyclerView.Adapter<Histor
 
     override fun onBindViewHolder(
         holder: HistoryViewMolder,
-        position: Int
+        position: Int,
     ) {
 
         val data = historyList[position]
         holder.binding.tvTitle.text = data.action
         holder.binding.tvSubtitle.text = data.remarks
         holder.binding.tvTimestamp.text = data.time
+        holder.itemView.setOnLongClickListener {
+            onClickListener.onLongPress(data)
+            true
+        }
+        holder.itemView.setOnClickListener {
+            onClickListener.onClick(data)
+        }
     }
 
     override fun getItemCount(): Int = historyList.size

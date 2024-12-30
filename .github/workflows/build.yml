@@ -1,75 +1,38 @@
-name: Build & deploy Android app
+name: Publish Release APK
 
 on:
+  push:
+    tags: [ "*" ]
   workflow_dispatch:
     inputs:
       tag_name:
-        description: "Tag name for the release (e.g., v1.0.0)"
+        description: "Tag name to build and publish APK"
         required: true
-      release_name:
-        description: "Release name (optional)"
-        required: false
-        default: ""
-      description:
-        description: "What's new in this release (Release Notes)"
-        required: true
+        default: "latest"
 
 jobs:
-  deployAndroid:
-    permissions:
-      contents: write
-    name: Build & deploy Android release
+  publish:
+
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Setup Java
-        uses: actions/setup-java@v4
+      - uses: actions/checkout@v3
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
         with:
+          java-version: '11'
           distribution: 'temurin'
-          java-version: '17'
+          cache: gradle
 
-      - name: Setup Android environment
-        uses: android-actions/setup-android@v3
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Build Release APK
+        run: ./gradlew assembleRelease
 
-      - name: Decode Keystore
-        uses: timheuer/base64-to-file@v1.2.4
-        id: android_keystore
-        with:
-          fileName: "android_keystore.jks"
-          encodedString: ${{ secrets.KEYSTORE_BASE64 }}
-
-      - name: Build APK and AAB
-        run: |
-          chmod 755 gradlew
-          ./gradlew clean assembleRelease bundleRelease \
-            -Pandroid.injected.signing.store.file=${{ steps.android_keystore.outputs.filePath }} \
-            -Pandroid.injected.signing.store.password=${{ secrets.KEYSTORE_PASSWORD }} \
-            -Pandroid.injected.signing.key.alias=${{ secrets.KEY_ALIAS }} \
-            -Pandroid.injected.signing.key.password=${{ secrets.KEY_PASSWORD }}
-
-      - name: Create 'whatsnew' Directory and Add Localized Release Notes
-        run: |
-          mkdir -p distribution/whatsnew
-          echo "${{ github.event.inputs.description }}" > distribution/whatsnew/whatsnew-en-US
-
-      - name: Upload APKs to GitHub Release
-        uses: softprops/action-gh-release@v1
+      - name: Publish APK
+        uses: alsrb968/action-release-apk@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          APP_FOLDER: app
         with:
           tag_name: ${{ github.event.inputs.tag_name }}
-          files: |
-            app/build/outputs/apk/release/app-release.apk
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload AAB to Play Store
-        uses: r0adkll/upload-google-play@v1.1.3
-        with:
-          serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
-          packageName: com.nasahacker.convertit
-          releaseFiles: app/build/outputs/bundle/release/app-release.aab
-          track: production
-          releaseName: ${{ github.event.inputs.release_name }}
-          whatsNewDirectory: distribution/whatsnew

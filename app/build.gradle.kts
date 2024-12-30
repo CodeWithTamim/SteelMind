@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("com.mikepenz.aboutlibraries.plugin")
 }
 
 android {
@@ -19,11 +20,10 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = true
-            isShrinkResources = true
+            isMinifyEnabled = false
+            isShrinkResources = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
         }
     }
@@ -67,4 +67,9 @@ dependencies {
     implementation(libs.nasacircleimageview)
     //Splash
     implementation(libs.androidx.core.splashscreen)
+    //lottie
+    implementation(libs.lottie)
+    implementation (libs.aboutlibraries.core)
+    implementation (libs.aboutlibraries)
+
 }

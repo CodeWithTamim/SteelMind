@@ -16,6 +16,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:menu="@menu/history_menu"
             app:title="History" />
     </com.google.android.material.appbar.AppBarLayout>
 

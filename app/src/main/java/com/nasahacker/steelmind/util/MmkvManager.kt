@@ -32,6 +32,19 @@ object MmkvManager {
         mmkv.encode(Constants.MMKV.HISTORY, jsonData)
     }
 
+    fun clearAllHistory() {
+        val emptyList = Gson().toJson(emptyList<History>())
+        mmkv.encode(Constants.MMKV.HISTORY, emptyList)
+    }
+
+    fun deleteHistory(history: History) {
+        val jsonString = mmkv.decodeString(Constants.MMKV.HISTORY)
+        val type = object : TypeToken<List<History>>() {}.type
+        val historyList = if (jsonString.isNullOrEmpty()) mutableListOf<History>()
+        else Gson().fromJson<List<History>>(jsonString, type).toMutableList()
+        historyList.remove(history)
+        addHistoryList(historyList)
+    }
 
     fun addHistoryList(history: List<History>) {
         val jsonData = Gson().toJson(history)
