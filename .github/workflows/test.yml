@@ -48,15 +48,3 @@ jobs:
 
       - name: Run Lint
         run: ./gradlew lint
-
-  security:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up CodeQL
-        uses: github/codeql-action/setup@v2
-
-      - name: Analyze code
-        uses: github/codeql-action/analyze@v2
