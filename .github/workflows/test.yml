@@ -9,7 +9,7 @@ on:
       - master
 
 jobs:
-  test:
+  build_and_test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -40,35 +40,11 @@ jobs:
             -Pandroid.injected.signing.key.alias=${{ secrets.KEY_ALIAS }} \
             -Pandroid.injected.signing.key.password=${{ secrets.KEY_PASSWORD }}
 
-  test_unit_instrumentation:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-
       - name: Run Unit Tests
         run: ./gradlew test
 
       - name: Run Instrumentation Tests
         run: ./gradlew connectedAndroidTest
-
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '17'
 
       - name: Run Lint
         run: ./gradlew lint
