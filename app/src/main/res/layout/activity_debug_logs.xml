@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.HistoryActivity">
+    tools:context=".ui.DebugLogsActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -17,16 +17,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:menu="@menu/delete_menu"
-            app:title="History" />
+            app:title="Debug Logs" />
     </com.google.android.material.appbar.AppBarLayout>
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvHistory"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_history" />
+        android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/logstv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:padding="@dimen/_8sdp"
+            android:textIsSelectable="true"
+            tools:text="Hello" />
+    </ScrollView>
 
 </LinearLayout>

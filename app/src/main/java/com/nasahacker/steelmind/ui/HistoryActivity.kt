@@ -72,7 +72,7 @@ class HistoryActivity : AppCompatActivity(), OnClickListener {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.history_menu, menu)
+        menuInflater.inflate(R.menu.delete_menu, menu)
         return true
     }
 

@@ -161,6 +161,7 @@ class MainActivity : AppCompatActivity() {
             R.id.top_history -> startActivity(Intent(this, HistoryActivity::class.java))
             R.id.top_export -> handleExportAction()
             R.id.top_import -> pickJsonFileLauncher.launch(arrayOf("application/json"))
+            R.id.debug_logs -> startActivity(Intent(this, DebugLogsActivity::class.java))
             R.id.top_license -> LibsBuilder()
                 .withActivityTitle(getString(R.string.open_source_licenses))
                 .start(this)
