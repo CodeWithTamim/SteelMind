@@ -1,15 +1,16 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    id("com.mikepenz.aboutlibraries.plugin")
+    alias(libs.plugins.about.libraries)
 }
 
 android {
-    namespace = "com.nasahacker.steelmind"
+    val packageName = "com.nasahacker.steelmind"
+    namespace = packageName
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.nasahacker.steelmind"
+        applicationId = packageName
         minSdk = 21
         targetSdk = 35
         versionCode = 2
@@ -50,26 +51,17 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    // ViewModel
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    // LiveData
     implementation(libs.androidx.lifecycle.livedata.ktx)
-    // Retrofit
     implementation(libs.retrofit)
-    // Gson Converter for Retrofit
     implementation(libs.converter.gson)
-    // MMKV
     implementation(libs.mmkv)
-    //responsive
     implementation(libs.sdp.android)
     implementation(libs.ssp.android)
-    //circle image view
     implementation(libs.nasacircleimageview)
-    //Splash
     implementation(libs.androidx.core.splashscreen)
-    //lottie
     implementation(libs.lottie)
-    implementation (libs.aboutlibraries.core)
-    implementation (libs.aboutlibraries)
+    implementation(libs.aboutlibraries.core)
+    implementation(libs.aboutlibraries)
 
 }

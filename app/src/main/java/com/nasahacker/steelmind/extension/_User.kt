@@ -16,18 +16,17 @@ import com.nasahacker.steelmind.dto.User
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
+import android.util.Log
 
 val gson: Gson by lazy { Gson() }
 
-fun User.toJson(): String {
-    return gson.toJson(this)
-}
+fun User.toJson(): String = gson.toJson(this)
 
 fun String.toUser(): User? {
     return try {
         gson.fromJson(this, User::class.java)
     } catch (e: Exception) {
-        e.printStackTrace()
+        Log.e("JsonConversion", "Error converting string to User", e)
         null
     }
 }
@@ -35,37 +34,28 @@ fun String.toUser(): User? {
 private fun Context.saveData(data: String): Boolean {
     return try {
         val fileName = "data.json"
-        val outputStream: OutputStream
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        val outputStream: OutputStream = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             // For Android 10 and above, use MediaStore
             val contentValues = ContentValues().apply {
                 put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
                 put(MediaStore.MediaColumns.MIME_TYPE, "application/json")
                 put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS)
             }
-
-            val uri =
-                contentResolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, contentValues)
-                    ?: throw Exception("Failed to create file in MediaStore")
-
-            outputStream = contentResolver.openOutputStream(uri)
-                ?: throw Exception("Failed to open output stream")
+            val uri = contentResolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, contentValues)
+                ?: throw Exception("Failed to create file in MediaStore")
+            contentResolver.openOutputStream(uri) ?: throw Exception("Failed to open output stream")
         } else {
             // For Android 9 and below, use direct file access
-            val downloadsDir =
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+            val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
             if (!downloadsDir.exists()) downloadsDir.mkdirs()
-
-            val file = File(downloadsDir, fileName)
-            outputStream = FileOutputStream(file)
+            FileOutputStream(File(downloadsDir, fileName))
         }
 
         // Write the JSON data to the file
         outputStream.use { it.write(data.toByteArray()) }
         true
     } catch (e: Exception) {
-        e.printStackTrace()
+        Log.e("SaveData", "Error saving data", e)
         false
     }
 }
@@ -97,7 +87,7 @@ fun Context.readJsonFromUri(uri: Uri): String? {
     return try {
         contentResolver.openInputStream(uri)?.bufferedReader()?.use { it.readText() }
     } catch (e: Exception) {
-        e.printStackTrace()
+        Log.e("ReadJson", "Error reading JSON from URI", e)
         null
     }
 }

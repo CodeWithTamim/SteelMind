@@ -1,5 +1,6 @@
 package com.nasahacker.steelmind.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,6 +23,7 @@ class MainViewModel : ViewModel() {
 
     fun incrementQuoteIndex() {
         val quotesList = _quotes.value
+        Log.d("HACKER", "incrementQuoteIndex: ${quotesList?.get(0)?.h}")
         val currentIndex = _currentQuoteIndex.value ?: 0
         if (!quotesList.isNullOrEmpty()) {
             if (currentIndex >= quotesList.size - 10) {

@@ -8,10 +8,6 @@
         android:title="More"
         app:showAsAction="always">
         <menu>
-            <!--<item
-                android:id="@+id/top_settings"
-                android:icon="@drawable/settings_24px"
-                android:title="Settings" />-->
 
             <item
                 android:id="@+id/top_history"
@@ -28,7 +24,7 @@
             <item
                 android:id="@+id/top_license"
                 android:icon="@drawable/license_24px"
-                android:title="Opensource Licenses" />
+                android:title="Open Source Licenses" />
             <!--    <item
                     android:id="@+id/top_about"
                     android:icon="@drawable/info_24px"

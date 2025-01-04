@@ -9,17 +9,16 @@ junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 appcompat = "1.7.0"
 lifecycleViewmodelKtx = "2.8.7"
-lottie = "3.4.0"
+lottie = "6.4.0"
 material = "1.12.0"
 activity = "1.9.3"
 constraintlayout = "2.2.0"
 mmkv = "2.0.1"
 nasacircleimageview = "1.0.5"
-ossLicensesPlugin = "0.10.6"
-playServicesOssLicenses = "17.1.0"
 retrofit = "2.11.0"
 sdpAndroid = "1.1.1"
 sspAndroid = "1.0.6"
+aboutLibraries = "10.8.0"
 
 [libraries]
 aboutlibraries = { module = "com.mikepenz:aboutlibraries", version.ref = "aboutlibrariesCore" }
@@ -39,8 +38,6 @@ androidx-activity = { group = "androidx.activity", name = "activity", version.re
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 mmkv = { module = "com.tencent:mmkv", version.ref = "mmkv" }
 nasacircleimageview = { module = "com.github.CodeWithTamim:NasaCircleImageView", version.ref = "nasacircleimageview" }
-oss-licenses-plugin = { module = "com.google.android.gms:oss-licenses-plugin", version.ref = "ossLicensesPlugin" }
-play-services-oss-licenses = { module = "com.google.android.gms:play-services-oss-licenses", version.ref = "playServicesOssLicenses" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 sdp-android = { module = "com.intuit.sdp:sdp-android", version.ref = "sdpAndroid" }
 ssp-android = { module = "com.intuit.ssp:ssp-android", version.ref = "sspAndroid" }
@@ -48,4 +45,5 @@ ssp-android = { module = "com.intuit.ssp:ssp-android", version.ref = "sspAndroid
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+about-libraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "aboutLibraries" }
 

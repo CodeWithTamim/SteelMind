@@ -7,4 +7,24 @@
     <string name="telegram_group_link">https://t.me/officialnasahacker</string>
     <string name="github_link">https://github.com/codewithtamim</string>
     <string name="label_version">Version: %1$s</string>
+    <string name="import_success">Success</string>
+    <string name="invalid_file_format">Invalid File Format</string>
+    <string name="no_remarks">No Remarks</string>
+    <string name="start">Start</string>
+    <string name="enter_remarks">Enter Remarks</string>
+    <string name="cancel">Cancel</string>
+    <string name="yes">Yes</string>
+    <string name="reset_confirmation">Reset confirmation</string>
+    <string name="reset_message">Are you sure you want to reset your progress?</string>
+    <string name="export_failure">Export Failure</string>
+    <string name="export_success">Export Success</string>
+    <string name="open_source_licenses">Open Source Licenses</string>
+    <string name="reset">Reset</string>
+    <string name="started_successfully">Started Successfully</string>
+    <string name="success">Success</string>
+    <string name="delete">Delete</string>
+    <string name="deleteAll">Delete All ?</string>
+    <string name="delete_confirmation">Are you sure you want to delete all history?</string>
+    <string name="delete_item">Delete item ?</string>
+    <string name="deleteItem_message">Are you sure you want to delete this item ?</string>
 </resources>

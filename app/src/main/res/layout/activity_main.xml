@@ -19,7 +19,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:menu="@menu/top_menu"
+            app:menu="@menu/main_menu"
             app:title="@string/app_name" />
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -85,8 +85,8 @@
 
                     <com.airbnb.lottie.LottieAnimationView
                         android:id="@+id/lottieAnim"
-                        android:layout_width="@dimen/_28sdp"
-                        android:layout_height="@dimen/_28sdp"
+                        android:layout_width="@dimen/_32sdp"
+                        android:layout_height="@dimen/_32sdp"
                         android:layout_gravity="center"
                         android:layout_marginTop="10dp"
                         android:visibility="gone"

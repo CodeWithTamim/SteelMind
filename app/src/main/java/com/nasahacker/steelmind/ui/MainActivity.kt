@@ -1,5 +1,6 @@
 package com.nasahacker.steelmind.ui
 
+import android.app.ActionBar.LayoutParams
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -17,6 +18,8 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.marginStart
+import androidx.core.view.setMargins
 import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -38,7 +41,6 @@ import com.nasahacker.steelmind.viewmodel.MainViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {
 
@@ -50,7 +52,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(binding.root)
+        setupInsets()
+        initializeUI()
+        observeViewModel()
+    }
 
+    private fun setupInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { view, insets ->
             val bars = insets.getInsets(
                 WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
@@ -63,26 +70,41 @@ class MainActivity : AppCompatActivity() {
             )
             WindowInsetsCompat.CONSUMED
         }
+    }
 
+    private fun initializeUI() {
         loadDefaultState()
-
         binding.btnStartOrReset.setOnClickListener {
-            val currentTimeInMS = System.currentTimeMillis()
             if (MmkvManager.getIsStarted()) {
                 showResetDialog()
             } else {
-                binding.btnStartOrReset.text = "Reset"
-                MmkvManager.setStartTime(currentTimeInMS)
-                startUpdatingUI()
-                MmkvManager.addHistory(
-                    History(
-                        remarks = "Started successfully",
-                        action = Constants.ACTION.ACTION_START
-                    )
-                )
-                binding.lottieAnim.visibility = VISIBLE
-                binding.lottieAnim.playAnimation()
+                startTracking()
             }
+        }
+
+        binding.btnFetchQuote.setOnClickListener {
+            mainViewModel.incrementQuoteIndex()
+        }
+
+        binding.toolbar.setOnMenuItemClickListener { menuItem ->
+            handleMenuItemClick(menuItem.itemId)
+        }
+    }
+
+    private fun startTracking() {
+        val currentTimeInMS = System.currentTimeMillis()
+        binding.btnStartOrReset.text = getString(R.string.reset)
+        MmkvManager.setStartTime(currentTimeInMS)
+        startUpdatingUI()
+        MmkvManager.addHistory(
+            History(
+                remarks = getString(R.string.started_successfully),
+                action = Constants.ACTION.ACTION_START
+            )
+        )
+        binding.lottieAnim.apply {
+            visibility = VISIBLE
+            playAnimation()
         }
     }
 
@@ -90,18 +112,25 @@ class MainActivity : AppCompatActivity() {
         isUpdating = true
         lifecycleScope.launch(Dispatchers.Main) {
             while (isUpdating) {
-                binding.tvCount.text = AppUtils.getTimeHMS(MmkvManager.getStartTime())
-                binding.tvTime.text = AppUtils.getTimeDD(MmkvManager.getStartTime())
-                Log.d("MainActivity", "Day progress: ${AppUtils.getDayProgressPercentage()}%")
-
-                if (Build.VERSION.SDK_INT >= 24) {
-                    binding.progressTime.setProgress(AppUtils.getDayProgressPercentage(), true)
-                } else {
-                    binding.progressTime.setProgress(AppUtils.getDayProgressPercentage())
-                }
+                updateUI()
                 delay(1000)
             }
         }
+    }
+
+    private fun updateUI() {
+        val startTime = MmkvManager.getStartTime()
+        binding.tvCount.text = AppUtils.getTimeHMS(startTime)
+        binding.tvTime.text = AppUtils.getTimeDD(startTime)
+        val progress = AppUtils.getDayProgressPercentage()
+        Log.d("MainActivity", "Day progress: $progress%")
+        if (Build.VERSION.SDK_INT >= 24) {
+            binding.progressTime.setProgress(progress, true)
+        } else {
+            binding.progressTime.setProgress(progress)
+        }
+
+
     }
 
     private fun stopUpdatingUI() {
@@ -113,128 +142,125 @@ class MainActivity : AppCompatActivity() {
             binding.lottieAnim.visibility = VISIBLE
             startUpdatingUI()
         }
-        binding.btnStartOrReset.text = if (MmkvManager.getIsStarted()) "Reset" else "Start"
+        binding.btnStartOrReset.text = if (MmkvManager.getIsStarted()) {
+            getString(R.string.reset)
+        } else {
+            getString(R.string.start)
+        }
+    }
 
+    private fun observeViewModel() {
         mainViewModel.fetchQuotes()
         mainViewModel.currentQuote.observe(this) { quote ->
             binding.txtQuote.text = Html.fromHtml(quote.h)
         }
+    }
 
-        binding.btnFetchQuote.setOnClickListener {
-            mainViewModel.incrementQuoteIndex()
+    private fun handleMenuItemClick(itemId: Int): Boolean {
+        when (itemId) {
+            R.id.top_history -> startActivity(Intent(this, HistoryActivity::class.java))
+            R.id.top_export -> handleExportAction()
+            R.id.top_import -> pickJsonFileLauncher.launch(arrayOf("application/json"))
+            R.id.top_license -> LibsBuilder()
+                .withActivityTitle(getString(R.string.open_source_licenses))
+                .start(this)
         }
-
-        binding.toolbar.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                /*
-                                R.id.top_about -> startActivity(Intent(this, AboutActivity::class.java))
-                */
-                R.id.top_history -> startActivity(Intent(this, HistoryActivity::class.java))
-                R.id.top_export -> handleExportAction()
-                R.id.top_import -> pickJsonFileLauncher.launch(arrayOf("application/json", "*/*"))
-                R.id.top_license -> LibsBuilder()
-                    .withActivityTitle("Open Source Licenses")
-                    .start(this)
-            }
-            true
-        }
+        return true
     }
 
     private fun handleExportAction() {
         val isExported = saveDataJson(User().toJson())
-        val message = if (isExported) {
-            "Export completed successfully!"
+        val messageRes = if (isExported) {
+            R.string.export_success
         } else {
-            "Export failed. Please try again."
+            R.string.export_failure
         }
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, getString(messageRes), Toast.LENGTH_SHORT).show()
     }
 
     private fun showResetDialog() {
-        val inputLayout = TextInputLayout(this).apply {
-            hint = "Enter remarks"
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-        }
-
-        val inputEditText = TextInputEditText(this).apply {
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-        }
-        inputLayout.addView(inputEditText)
-
-        val container = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-            setPadding(16, 16, 16, 16)
-            addView(inputLayout)
-        }
-
+        val inputLayout = createInputLayout()
         MaterialAlertDialogBuilder(this)
-            .setTitle("Reset Confirmation")
-            .setMessage("Are you sure you want to reset? This will erase the current progress.")
-            .setView(container)
-            .setPositiveButton("Yes") { _, _ ->
-                val remarks = inputEditText.text?.toString() ?: "No remarks provided"
+            .setTitle(R.string.reset_confirmation)
+            .setMessage(R.string.reset_message)
+            .setView(inputLayout)
+            .setPositiveButton(R.string.yes) { _, _ ->
+                val remarks = inputLayout.editText?.text.toString()
                 resetProgress(remarks)
-                binding.lottieAnim.visibility = GONE
             }
-            .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
+            .setNegativeButton(R.string.cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
             .show()
     }
+
+    private fun createInputLayout(): TextInputLayout {
+        return TextInputLayout(this).apply {
+            hint = getString(R.string.enter_remarks)
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            val editText = TextInputEditText(context).apply {
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    setMargins(18, 8, 18, 8)
+                }
+            }
+            addView(editText)
+        }
+    }
+
 
     private fun resetProgress(remarks: String) {
         MmkvManager.setStartTime(0)
         MmkvManager.setIsStarted(false)
-        binding.btnStartOrReset.text = "Start"
+        binding.btnStartOrReset.text = getString(R.string.start)
         stopUpdatingUI()
         binding.tvCount.text = "-"
         binding.tvTime.text = "-"
-
         if (Build.VERSION.SDK_INT >= 24) {
             binding.progressTime.setProgress(0, true)
         } else {
             binding.progressTime.setProgress(0)
+
         }
 
         MmkvManager.addHistory(
             History(
-                remarks = remarks.ifEmpty { "No remarks" },
+                remarks = remarks.ifEmpty { getString(R.string.no_remarks) },
                 action = Constants.ACTION.ACTION_ENDED
             )
         )
+        binding.lottieAnim.visibility = GONE
+        Toast.makeText(this, getString(R.string.success), Toast.LENGTH_SHORT).show()
     }
 
     private val pickJsonFileLauncher: ActivityResultLauncher<Array<String>> =
         registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri: Uri? ->
-            uri?.let {
-                val jsonContent = readJsonFromUri(it)
-                val user = jsonContent?.toUser()
-                if (user != null) {
-                    MmkvManager.setStartTime(user.startTime)
-                    MmkvManager.setIsStarted(user.isStarted)
-                    MmkvManager.addHistoryList(user.history)
-                    Toast.makeText(
-                        this,
-                        "Import completed successfully. Exiting...",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    runBlocking { delay(1000) }
-                    finish()
-                } else {
-                    Toast.makeText(
-                        this,
-                        "Invalid file format. Please check and try again.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
+            uri?.let { handleFileImport(it) }
         }
+
+    private fun handleFileImport(uri: Uri) {
+        val jsonContent = readJsonFromUri(uri)
+        val user = jsonContent?.toUser()
+        if (user != null) {
+            MmkvManager.setStartTime(user.startTime)
+            MmkvManager.setIsStarted(user.isStarted)
+            MmkvManager.addHistoryList(user.history)
+            showToastAndFinish(R.string.import_success)
+        } else {
+            Toast.makeText(this, R.string.invalid_file_format, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun showToastAndFinish(messageRes: Int) {
+        Toast.makeText(this, getString(messageRes), Toast.LENGTH_SHORT).show()
+        lifecycleScope.launch {
+            delay(1000)
+            finish()
+        }
+    }
 }

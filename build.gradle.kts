@@ -2,6 +2,5 @@
 plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.kotlin.android) apply false
-    id("com.mikepenz.aboutlibraries.plugin") version "10.8.0" apply false
-
+    alias(libs.plugins.about.libraries) apply false
 }
