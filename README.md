@@ -18,6 +18,17 @@
 - **Motivational Quotes:** Access a curated selection of motivational quotes to inspire your journey.
 - **User-Friendly Interface:** Experience a sleek design adhering to Material Design 3 guidelines.
 
+
+## 📱 Get It on Play Store
+
+Download **ConvertIt** directly from the Play Store:
+
+<p align="left">
+  <a href="https://play.google.com/store/apps/details?id=com.nasahacker.steelmind" target="_blank">
+    <img alt="Get it on Google Play" src="https://img.shields.io/badge/Get%20it%20on-Google%20Play-4285F4?style=for-the-badge&logo=google-play&logoColor=white" width="200"/>
+  </a>
+</p>
+
 ## Screenshots
 
 <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
@@ -34,21 +45,21 @@
    git clone https://github.com/CodeWithTamim/SteelMind.git
    ```
 2. **Open in Android Studio:**
-    - Launch Android Studio.
-    - Select 'Open an existing project' and navigate to the cloned directory.
+   - Launch Android Studio.
+   - Select 'Open an existing project' and navigate to the cloned directory.
 3. **Build and Run:**
-    - Connect your Android device or set up an emulator.
-    - Click 'Run' to install and start the app.
+   - Connect your Android device or set up an emulator.
+   - Click 'Run' to install and start the app.
 
 ## Usage
 
 1. **Start Tracking:**
-    - Open the app and tap the **Start** button to begin monitoring your progress.
+   - Open the app and tap the **Start** button to begin monitoring your progress.
 2. **Monitor Progress:**
-    - Use the circular progress indicator to view daily achievements.
-    - The streak timer displays the duration of your ongoing streak.
+   - Use the circular progress indicator to view daily achievements.
+   - The streak timer displays the duration of your ongoing streak.
 3. **Motivational Support:**
-    - Tap the **Motivational Quotes** button to receive daily inspiration.
+   - Tap the **Motivational Quotes** button to receive daily inspiration.
 
 ## Architecture
 
@@ -69,7 +80,7 @@ Steel Mind is structured using the **MVVM** architecture, promoting:
 Contributions are welcome! To contribute:
 
 1. **Fork the Repository:**
-    - Click the 'Fork' button on the repository's GitHub page.
+   - Click the 'Fork' button on the repository's GitHub page.
 2. **Create a Feature Branch:**
    ```bash
    git checkout -b feature/YourFeatureName
@@ -83,7 +94,7 @@ Contributions are welcome! To contribute:
    git push origin feature/YourFeatureName
    ```
 5. **Open a Pull Request:**
-    - Navigate to the original repository and click 'New Pull Request'.
+   - Navigate to the original repository and click 'New Pull Request'.
 
 ## License
 
