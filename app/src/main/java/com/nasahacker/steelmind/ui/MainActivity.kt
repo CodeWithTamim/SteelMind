@@ -1,6 +1,5 @@
 package com.nasahacker.steelmind.ui
 
-import android.app.ActionBar.LayoutParams
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -18,8 +17,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.marginStart
-import androidx.core.view.setMargins
 import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -44,6 +41,7 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
+    private val TAG = "[MainActivity]"
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private val mainViewModel: MainViewModel by viewModels()
     private var isUpdating = false
@@ -123,14 +121,12 @@ class MainActivity : AppCompatActivity() {
         binding.tvCount.text = AppUtils.getTimeHMS(startTime)
         binding.tvTime.text = AppUtils.getTimeDD(startTime)
         val progress = AppUtils.getDayProgressPercentage()
-        Log.d("MainActivity", "Day progress: $progress%")
+        Log.d(TAG, "Day progress: $progress%")
         if (Build.VERSION.SDK_INT >= 24) {
             binding.progressTime.setProgress(progress, true)
         } else {
             binding.progressTime.setProgress(progress)
         }
-
-
     }
 
     private fun stopUpdatingUI() {
@@ -214,7 +210,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     private fun resetProgress(remarks: String) {
         MmkvManager.setStartTime(0)
         MmkvManager.setIsStarted(false)
@@ -226,7 +221,6 @@ class MainActivity : AppCompatActivity() {
             binding.progressTime.setProgress(0, true)
         } else {
             binding.progressTime.setProgress(0)
-
         }
 
         MmkvManager.addHistory(
@@ -251,17 +245,15 @@ class MainActivity : AppCompatActivity() {
             MmkvManager.setStartTime(user.startTime)
             MmkvManager.setIsStarted(user.isStarted)
             MmkvManager.addHistoryList(user.history)
-            showToastAndFinish(R.string.import_success)
+            if (MmkvManager.getIsStarted()) {
+                binding.lottieAnim.visibility = VISIBLE
+                startUpdatingUI()
+            }
+            Toast.makeText(this, getString(R.string.import_success), Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(this, R.string.invalid_file_format, Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun showToastAndFinish(messageRes: Int) {
-        Toast.makeText(this, getString(messageRes), Toast.LENGTH_SHORT).show()
-        lifecycleScope.launch {
-            delay(1000)
-            finish()
-        }
-    }
+
 }

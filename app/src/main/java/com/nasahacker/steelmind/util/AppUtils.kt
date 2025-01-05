@@ -1,17 +1,11 @@
 package com.nasahacker.steelmind.util
 
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
-import com.nasahacker.steelmind.ui.MainActivity
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import com
-.nasahacker.steelmind.R
 
 object AppUtils {
     fun openLink(context: Context, link: String) {
@@ -23,32 +17,6 @@ object AppUtils {
         val date = Date(milliSeconds)
         val formatter = SimpleDateFormat("hh:mm:ss a dd/MM/yyyy", Locale.getDefault())
         return formatter.format(date)
-    }
-
-
-    fun sendNotification(context: Context, quote: String, author: String) {
-        // Create a PendingIntent for when the notification is tapped
-        val intent = Intent(context, MainActivity::class.java)
-        val pendingIntent =
-            PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-
-        // Create the notification with the quote and author
-        val notification = NotificationCompat.Builder(context, "default")
-            .setContentTitle("Habit Tracker")
-            .setContentText("Quote of the day")
-            .setStyle(
-                NotificationCompat.BigTextStyle()
-                    .bigText("\"$quote\"\n- $author")  // Show quote and author
-            )
-            .setSmallIcon(R.mipmap.ic_launcher) // Use your own icon
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setContentIntent(pendingIntent)
-            .setAutoCancel(true)
-            .build()
-
-        // Send the notification
-        val notificationManager = NotificationManagerCompat.from(context)
-        notificationManager.notify(0, notification)
     }
 
 

@@ -52,6 +52,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"
                 android:gravity="center"
+                android:fontFamily="@font/roboto"
                 android:text="@string/label_bio"
                 android:textSize="16sp" />
 
@@ -129,6 +130,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:fontFamily="@font/roboto"
                 android:layout_marginTop="12dp"
                 android:textSize="14sp"
                 tools:text="Version: 1.0.0" />
@@ -139,6 +141,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:gravity="center"
+                android:fontFamily="@font/roboto"
                 android:padding="16dp"
                 android:text="@string/label_apache_2_0_license"
                 android:textSize="12sp" />
