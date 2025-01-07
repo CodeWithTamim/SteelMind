@@ -30,6 +30,18 @@ class HistoryActivity : AppCompatActivity(), OnClickListener {
         setupWindowInsets()
         setupRecyclerView()
         setupToolbar()
+
+        //use when using compose
+
+        /*
+        binding.composeView.setContent {
+            MaterialTheme {
+                HistoryScreen {
+                    onBackPressedDispatcher.onBackPressed()
+                }
+            }
+        }
+         */
     }
 
     private fun setupWindowInsets() {

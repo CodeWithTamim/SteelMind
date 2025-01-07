@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.about.libraries)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -38,6 +39,10 @@ android {
     buildFeatures {
         viewBinding = true
         buildConfig = true
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.3.2"
     }
 }
 
@@ -63,5 +68,17 @@ dependencies {
     implementation(libs.lottie)
     implementation(libs.aboutlibraries.core)
     implementation(libs.aboutlibraries)
+
+    val composeBom = platform("androidx.compose:compose-bom:2024.12.01")
+    implementation(composeBom)
+    androidTestImplementation(composeBom)
+
+    implementation ("androidx.compose.runtime:runtime")
+    implementation ("androidx.compose.ui:ui")
+    implementation ("androidx.compose.foundation:foundation")
+    implementation ("androidx.compose.foundation:foundation-layout")
+    implementation ("androidx.compose.material3:material3")
+    implementation ("androidx.compose.runtime:runtime-livedata")
+    implementation ("androidx.compose.ui:ui-tooling")
 
 }
