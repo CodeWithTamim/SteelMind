@@ -22,7 +22,7 @@ import com.nasahacker.steelmind.util.MmkvManager
 
 @Composable
 fun HistoryScreen(onNavigationClick: () -> Unit) {
-    // States
+    // some states
     var historyList by remember { mutableStateOf(MmkvManager.getHistory()) }
     var isDeleteAllDialogVisible by remember { mutableStateOf(false) }
     var isDeleteItemDialogVisible by remember { mutableStateOf(false) }
@@ -30,7 +30,6 @@ fun HistoryScreen(onNavigationClick: () -> Unit) {
     val context = LocalContext.current
 
     Column(modifier = Modifier.fillMaxSize()) {
-        // Top AppBar
         AppBar(
             title = "History",
             onNavigationClick = onNavigationClick,
@@ -44,7 +43,6 @@ fun HistoryScreen(onNavigationClick: () -> Unit) {
             }
         )
 
-        // History List
         LazyColumn {
             items(historyList) { history ->
                 HistoryItem(
@@ -52,7 +50,7 @@ fun HistoryScreen(onNavigationClick: () -> Unit) {
                     remarks = history.remarks,
                     time = history.time,
                     onClick = {
-                        // Handle click event if needed
+
                     },
                     onLongPress = {
                         selectedHistory = history
@@ -62,7 +60,6 @@ fun HistoryScreen(onNavigationClick: () -> Unit) {
             }
         }
 
-        // Delete All Dialog
         if (isDeleteAllDialogVisible) {
             DeleteDialog(
                 onDismissRequest = { isDeleteAllDialogVisible = false },
@@ -78,7 +75,6 @@ fun HistoryScreen(onNavigationClick: () -> Unit) {
             )
         }
 
-        // Delete Item Dialog
         if (isDeleteItemDialogVisible) {
             selectedHistory?.let { history ->
                 DeleteDialog(

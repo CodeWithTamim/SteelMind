@@ -12,6 +12,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.nasahacker.steelmind.BuildConfig
 import com.nasahacker.steelmind.R
+import com.nasahacker.steelmind.compose.ui.screen.DebugLogsScreen
 import com.nasahacker.steelmind.databinding.ActivityDebugLogsBinding
 import kotlinx.coroutines.*
 import java.io.BufferedReader
@@ -46,7 +47,16 @@ class DebugLogsActivity : AppCompatActivity() {
             true
         }
 
-        startLogcatReader()
+         startLogcatReader()
+
+
+        /*binding.composeView.setContent {
+            DebugLogsScreen(onNavigationClick = {
+                onBackPressedDispatcher.onBackPressed()
+            })
+        }*/
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -54,24 +64,23 @@ class DebugLogsActivity : AppCompatActivity() {
         return true
     }
 
+        private fun startLogcatReader() {
+            lifecycleScope.launch(Dispatchers.IO) {
+                try {
+                    val process = Runtime.getRuntime().exec("logcat")
+                    val bufferedReader = BufferedReader(InputStreamReader(process.inputStream))
+                    var line: String?
+                    while (bufferedReader.readLine().also { line = it } != null) {
+                        val log = line!!
 
-    private fun startLogcatReader() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            try {
-                val process = Runtime.getRuntime().exec("logcat")
-                val bufferedReader = BufferedReader(InputStreamReader(process.inputStream))
-                var line: String?
-                while (bufferedReader.readLine().also { line = it } != null) {
-                    val log = line!!
-
-                    withContext(Dispatchers.Main) {
-                        binding.logstv.append("\n$log")
+                        withContext(Dispatchers.Main) {
+                            binding.logstv.append("\n$log")
+                        }
                     }
+                } catch (e: IOException) {
+                    e.printStackTrace()
                 }
-            } catch (e: IOException) {
-                e.printStackTrace()
             }
         }
-    }
 
 }
