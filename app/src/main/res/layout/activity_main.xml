@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.MainActivity">
-
+<!--
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
@@ -167,5 +167,12 @@
             android:layout_weight="1"
             android:text="Quote"
             app:icon="@drawable/refresh_24px" />
-    </LinearLayout>
+    </LinearLayout>-->
+
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/compose_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

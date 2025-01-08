@@ -24,6 +24,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.mikepenz.aboutlibraries.LibsBuilder
 import com.nasahacker.steelmind.R
+import com.nasahacker.steelmind.compose.ui.screen.MainScreen
 import com.nasahacker.steelmind.databinding.ActivityMainBinding
 import com.nasahacker.steelmind.extension.readJsonFromUri
 import com.nasahacker.steelmind.extension.saveDataJson
@@ -50,12 +51,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(binding.root)
-        setupInsets()
+       /* setupInsets()
         initializeUI()
-        observeViewModel()
+        observeViewModel()*/
+
+        binding.composeView.setContent {
+            MainScreen()
+        }
+
+
     }
 
-    private fun setupInsets() {
+    /*private fun setupInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { view, insets ->
             val bars = insets.getInsets(
                 WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
@@ -254,6 +261,6 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, R.string.invalid_file_format, Toast.LENGTH_SHORT).show()
         }
     }
-
+*/
 
 }
